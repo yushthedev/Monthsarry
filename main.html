@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our 1 Month - For My Distant Love, Maria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Cormorant+Garamond:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: #0a0a1a;
+            color: #f0e6ff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: radial-gradient(ellipse at center, #1a1a3a 0%, #0a0a1a 70%);
+        }
+        
+        /* Stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        /* Heartbeat Controls */
+        .heartbeat-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: rgba(20, 10, 40, 0.8);
+            padding: 10px 15px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+        }
+        
+        .heartbeat-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #a855f7, #ff4d8d);
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .heartbeat-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(168, 85, 247, 0.7);
+        }
+        
+        .volume-slider {
+            width: 100px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #ff4d8d;
+            cursor: pointer;
+        }
+        
+        .volume-slider:hover {
+            opacity: 1;
+        }
+        
+        /* Header styling - Now consistent across pages */
+        .page-header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(20, 10, 40, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 105, 180, 0.3);
+            z-index: 10;
+            position: relative;
+            width: 100%;
+        }
+        
+        .page-header h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            background: linear-gradient(45deg, #ff8cc6, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+        }
+        
+        .page-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            color: #d8b4fe;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+        
+        /* Main content area */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Page styling */
+        .page {
+            width: 100%;
+            min-height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1), opacity 1s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .page.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .page.previous {
+            transform: translateX(-100%);
+        }
+        
+        .page-content {
+            flex-grow: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            overflow-y: auto;
+        }
+        
+        /* Page backgrounds */
+        #page1 {
+            background: radial-gradient(circle at 30% 30%, rgba(88, 28, 135, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(219, 39, 119, 0.15) 0%, transparent 50%);
+        }
+        
+        #page2 {
+            background: radial-gradient(circle at 20% 80%, rgba(124, 58, 237, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.15) 0%, transparent 50%);
+        }
+        
+        #page3 {
+            background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.2) 0%, transparent 60%),
+                        radial-gradient(circle at 90% 90%, rgba(244, 114, 182, 0.15) 0%, transparent 50%);
+        }
+        
+        #page4 {
+            background: radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(255, 77, 141, 0.1) 0%, transparent 40%);
+        }
+        
+        /* Heart animation */
+        .heart-container {
+            position: relative;
+            margin: 20px 0 30px;
+        }
+        
+        .heart-icon {
+            font-size: 5rem;
+            color: #ff4d8d;
+            filter: drop-shadow(0 0 15px rgba(255, 77, 141, 0.7));
+            animation: heartbeat 1.8s infinite;
+            z-index: 2;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 77, 141, 0.6);
+            animation: pulse 2s infinite;
+            z-index: 1;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        
+        @keyframes pulse {
+            0% { width: 100px; height: 100px; opacity: 1; }
+            100% { width: 200px; height: 200px; opacity: 0; }
+        }
+        
+        .page-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            color: #f0abfc;
+            margin-bottom: 25px;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(240, 171, 252, 0.5);
+        }
+        
+        .page-text {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin-bottom: 25px;
+            color: #e9d5ff;
+            font-weight: 300;
+        }
+        
+        .highlight {
+            color: #ff8cc6;
+            font-weight: 600;
+            font-size: 1.3rem;
+            text-shadow: 0 0 8px rgba(255, 140, 198, 0.5);
+        }
+        
+        .distance-heart {
+            display: inline-block;
+            margin: 0 10px;
+            color: #ff4d8d;
+            animation: float 3s ease-in-out infinite;
+            cursor: pointer;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Future memories container */
+        .future-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
+            max-width: 900px;
+        }
+        
+        .future-card {
+            width: 200px;
+            padding: 20px 15px;
+            background: rgba(30, 15, 60, 0.7);
+            border-radius: 15px;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+            cursor: pointer;
+        }
+        
+        .future-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: rgba(255, 77, 141, 0.7);
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);
+        }
+        
+        .future-icon {
+            font-size: 2.8rem;
+            color: #a855f7;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.5));
+        }
+        
+        .future-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #f0abfc;
+            font-size: 1.2rem;
+        }
+        
+        .future-desc {
+            font-size: 0.95rem;
+            color: #d8b4fe;
+            line-height: 1.5;
+        }
+        
+        /* Love letter styling */
+        .letter-container {
+            width: 90%;
+            max-width: 700px;
+            padding: 30px;
+            background: rgba(20, 10, 40, 0.7);
+            border-radius: 15px;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            backdrop-filter: blur(5px);
+            margin-top: 20px;
+            position: relative;
+            text-align: left;
+        }
+        
+        .letter-container:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #a855f7, #ff4d8d, #a855f7);
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .letter-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #f0e6ff;
+        }
+        
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #ff8cc6;
+            margin-top: 30px;
+            text-align: right;
+        }
+        
+        /* Page 4 - Music & Pictures Gallery */
+        .gallery-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .music-player-section {
+            background: rgba(20, 10, 40, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .music-player-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: #f0abfc;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 2px solid rgba(168, 85, 247, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .songs-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .song-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: rgba(30, 15, 60, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .song-item:hover {
+            background: rgba(40, 20, 80, 0.7);
+            border-color: rgba(255, 77, 141, 0.4);
+            transform: translateX(10px);
+        }
+        
+        .song-item.active {
+            background: linear-gradient(90deg, rgba(168, 85, 247, 0.3), rgba(255, 77, 141, 0.2));
+            border-color: rgba(255, 77, 141, 0.6);
+        }
+        
+        .song-icon {
+            color: #ff4d8d;
+            font-size: 1.5rem;
+        }
+        
+        .song-info {
+            flex-grow: 1;
+        }
+        
+        .song-title {
+            font-weight: 600;
+            color: #f0abfc;
+            font-size: 1.1rem;
+        }
+        
+        .song-artist {
+            color: #d8b4fe;
+            font-size: 0.9rem;
+            margin-top: 3px;
+        }
+        
+        .song-duration {
+            color: #a78bfa;
+            font-size: 0.9rem;
+        }
+        
+        .player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 25px;
+        }
+        
+        .player-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #a855f7, #ff4d8d);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .player-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+        }
+        
+        .player-btn-small {
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+        }
+        
+        .progress-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .progress-bar {
+            flex-grow: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #a855f7, #ff4d8d);
+            width: 0%;
+            border-radius: 3px;
+            transition: width 0.1s linear;
+        }
+        
+        .time-display {
+            color: #d8b4fe;
+            font-size: 0.9rem;
+            min-width: 100px;
+        }
+        
+        /* Pictures Gallery */
+        .pictures-section {
+            background: rgba(20, 10, 40, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .gallery-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: #f0abfc;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 2px solid rgba(168, 85, 247, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 1/1;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.03);
+            border-color: rgba(255, 77, 141, 0.6);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(20, 10, 40, 0.9));
+            color: white;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        /* Custom picture upload hint */
+        .upload-hint {
+            text-align: center;
+            color: #a78bfa;
+            font-style: italic;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(30, 15, 60, 0.5);
+            border-radius: 10px;
+            border: 1px dashed rgba(168, 85, 247, 0.3);
+        }
+        
+        /* Page footer - Consistent across pages */
+        .page-footer {
+            padding: 20px 30px;
+            background: rgba(20, 10, 40, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 105, 180, 0.3);
+            z-index: 10;
+            position: relative;
+            width: 100%;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(45deg, #a855f7, #ff4d8d);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(168, 85, 247, 0.4);
+            letter-spacing: 1px;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(168, 85, 247, 0.6);
+            background: linear-gradient(45deg, #ff4d8d, #a855f7);
+        }
+        
+        .nav-btn:disabled {
+            background: #4a5568;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .page-indicator {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .indicator-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #4a5568;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .indicator-dot.active {
+            background: #ff4d8d;
+            transform: scale(1.3);
+            border-color: #f0abfc;
+            box-shadow: 0 0 10px rgba(255, 77, 141, 0.7);
+        }
+        
+        .page-counter {
+            font-family: 'Cormorant Garamond', serif;
+            color: #d8b4fe;
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+        
+        /* Heart counter in footer */
+        .heart-counter {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ff8cc6;
+            font-size: 1.1rem;
+        }
+        
+        .heart-counter i {
+            color: #ff4d8d;
+            animation: pulse-small 1.5s infinite;
+            cursor: pointer;
+        }
+        
+        @keyframes pulse-small {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        /* Audio status indicator */
+        .audio-status {
+            font-size: 0.8rem;
+            color: #a78bfa;
+            margin-top: 5px;
+            text-align: center;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .page-title {
+                font-size: 2.2rem;
+            }
+            
+            .page-text {
+                font-size: 1.1rem;
+                padding: 0 10px;
+            }
+            
+            .future-card {
+                width: 160px;
+                padding: 15px 10px;
+            }
+            
+            .nav-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .letter-container {
+                padding: 20px;
+            }
+            
+            .letter-text {
+                font-size: 1.1rem;
+            }
+            
+            .heartbeat-controls {
+                top: 10px;
+                right: 10px;
+                padding: 8px 12px;
+            }
+            
+            .heartbeat-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .volume-slider {
+                width: 80px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .player-controls {
+                flex-wrap: wrap;
+            }
+            
+            .progress-container {
+                order: 3;
+                width: 100%;
+                margin-top: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .page-content {
+                padding: 20px 10px;
+            }
+            
+            .future-card {
+                width: 140px;
+            }
+            
+            .footer-content {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            .nav-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .page-indicator {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                margin-top: 10px;
+            }
+            
+            .page-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .heartbeat-controls {
+                flex-direction: column;
+                align-items: center;
+                padding: 10px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                max-width: 350px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .music-player-section, .pictures-section {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Stars background -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Heartbeat Controls -->
+    <div class="heartbeat-controls">
+        <button id="heartbeatBtn" class="heartbeat-btn" title="Play/Pause Heartbeat">
+            <i class="fas fa-heartbeat"></i>
+        </button>
+        <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.1" value="0.5" title="Heartbeat Volume">
+        <div class="audio-status" id="audioStatus">Heartbeat enabled</div>
+    </div>
+    
+    <div class="container">
+        <main class="main-content">
+            <!-- Page 1: Welcome -->
+            <div id="page1" class="page active">
+                <header class="page-header">
+                    <h2>Month 1: Our Beginning</h2>
+                    <p class="page-subtitle">Love that bridges every distance</p>
+                </header>
+                
+                <div class="page-content">
+                    <div class="heart-container">
+                        <div class="pulse-ring"></div>
+                        <div class="heart-icon" id="heartIcon1">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <h3 class="page-title">One Month With You</h3>
+                    <p class="page-text">
+                        My dearest <span class="highlight">Maria</span>,<br><br>
+                        Today marks one month since you came into my life and changed everything.
+                        Though we're separated by distance 
+                        <span class="distance-heart" id="distanceHeart1"><i class="fas fa-heart"></i></span> 
+                        every moment with you, even through a screen, feels magical.
+                    </p>
+                    <p class="page-text">
+                        They say absence makes the heart grow fonder, and I've never believed anything more.
+                        Every text, every call, every video chat with you is a treasure I hold close to my heart.
+                    </p>
+                    <p class="page-text">
+                        This distance is temporary, but what we're building together is forever.
+                    </p>
+                </div>
+                
+                <footer class="page-footer">
+                    <div class="footer-content">
+                        <button id="prevBtn" class="nav-btn" disabled>
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        
+                        <div class="page-indicator">
+                            <span class="indicator-dot active" data-page="1"></span>
+                            <span class="indicator-dot" data-page="2"></span>
+                            <span class="indicator-dot" data-page="3"></span>
+                            <span class="indicator-dot" data-page="4"></span>
+                        </div>
+                        
+                        <div class="heart-counter">
+                            <i class="fas fa-heart" id="footerHeart1"></i>
+                            <span>Day 30 of Forever</span>
+                        </div>
+                        
+                        <button id="nextBtn" class="nav-btn">
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </footer>
+            </div>
+            
+            <!-- Page 2: Future Memories -->
+            <div id="page2" class="page">
+                <header class="page-header">
+                    <h2>Our Future Together</h2>
+                    <p class="page-subtitle">Dreaming of moments we'll share</p>
+                </header>
+                
+                <div class="page-content">
+                    <h3 class="page-title">Memories We Will Make</h3>
+                    <p class="page-text">
+                        While we haven't had the chance to create physical memories yet, 
+                        my heart is already filled with dreams of all the beautiful moments 
+                        we'll share when we're finally together, <span class="highlight">Maria</span>.
+                    </p>
+                    
+                    <div class="future-container">
+                        <div class="future-card" id="memory1">
+                            <div class="future-icon">
+                                <i class="fas fa-hands-holding"></i>
+                            </div>
+                            <div class="future-title">Our First Embrace</div>
+                            <div class="future-desc">That moment when I'll finally hold you in my arms after all this waiting</div>
+                        </div>
+                        
+                        <div class="future-card" id="memory2">
+                            <div class="future-icon">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <div class="future-title">Morning Together</div>
+                            <div class="future-desc">Waking up next to you, seeing your beautiful face first thing in the morning</div>
+                        </div>
+                        
+                        <div class="future-card" id="memory3">
+                            <div class="future-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="future-title">Shared Meals</div>
+                            <div class="future-desc">Cooking together, feeding each other, laughing over burnt pancakes</div>
+                        </div>
+                        
+                        <div class="future-card" id="memory4">
+                            <div class="future-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="future-title">Stargazing</div>
+                            <div class="future-desc">Lying under the same stars that connect us now, but finally side by side</div>
+                        </div>
+                    </div>
+                    
+                    <p class="page-text" style="margin-top: 30px;">
+                        I dream of these moments every day, and I know they'll be worth every second of this wait.
+                    </p>
+                </div>
+                
+                <footer class="page-footer">
+                    <div class="footer-content">
+                        <button id="prevBtn2" class="nav-btn">
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        
+                        <div class="page-indicator">
+                            <span class="indicator-dot" data-page="1"></span>
+                            <span class="indicator-dot active" data-page="2"></span>
+                            <span class="indicator-dot" data-page="3"></span>
+                            <span class="indicator-dot" data-page="4"></span>
+                        </div>
+                        
+                        <div class="heart-counter">
+                            <i class="fas fa-heart" id="footerHeart2"></i>
+                            <span>Counting Days Until We Meet</span>
+                        </div>
+                        
+                        <button id="nextBtn2" class="nav-btn">
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </footer>
+            </div>
+            
+            <!-- Page 3: Love Letter -->
+            <div id="page3" class="page">
+                <header class="page-header">
+                    <h2>My Promise to You</h2>
+                    <p class="page-subtitle">Forever and always, my love</p>
+                </header>
+                
+                <div class="page-content">
+                    <div class="heart-container">
+                        <div class="pulse-ring"></div>
+                        <div class="heart-icon" id="heartIcon3">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <h3 class="page-title">My Heart in Words</h3>
+                    
+                    <div class="letter-container">
+                        <div class="letter-text">
+                            <p>My beautiful <span class="highlight">Maria</span>,</p>
+                            <br>
+                            <p>This distance between us is merely physical. In every way that matters, you are already with me.</p>
+                            <br>
+                            <p>I feel you in the warmth of the morning sun, in the quiet moments before sleep, in every beat of my heart that whispers your name.</p>
+                            <br>
+                            <p>These 30 days have taught me that love knows no distance. Our connection transcends miles, time zones, and everything that tries to keep us apart.</p>
+                            <br>
+                            <p>I promise to cherish every conversation, to remember every detail you share, to build with you a foundation so strong that when we're finally together, nothing will ever shake us.</p>
+                            <br>
+                            <p>This is just our beginning. I can't wait for the day when "goodnight" means turning to kiss you instead of ending a call.</p>
+                            <br>
+                            <p>Until then, know that you are loved beyond measure, missed beyond words, and dreamed of every moment.</p>
+                            <div class="signature">Forever Yours</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <footer class="page-footer">
+                    <div class="footer-content">
+                        <button id="prevBtn3" class="nav-btn">
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        
+                        <div class="page-indicator">
+                            <span class="indicator-dot" data-page="1"></span>
+                            <span class="indicator-dot" data-page="2"></span>
+                            <span class="indicator-dot active" data-page="3"></span>
+                            <span class="indicator-dot" data-page="4"></span>
+                        </div>
+                        
+                        <div class="heart-counter">
+                            <i class="fas fa-heart" id="footerHeart3"></i>
+                            <span>My Love is Always With You</span>
+                        </div>
+                        
+                        <button id="nextBtn3" class="nav-btn">
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </footer>
+            </div>
+            
+            <!-- Page 4: Music & Pictures Gallery -->
+            <div id="page4" class="page">
+                <header class="page-header">
+                    <h2>Our Love Playlist & Gallery</h2>
+                    <p class="page-subtitle">Songs and visions that remind me of you</p>
+                </header>
+                
+                <div class="page-content">
+                    <div class="heart-container">
+                        <div class="pulse-ring"></div>
+                        <div class="heart-icon" id="heartIcon4">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <h3 class="page-title">Music & Memories</h3>
+                    
+                    <div class="gallery-container">
+                        <!-- Music Player Section -->
+                        <div class="music-player-section">
+                            <h4 class="music-player-title">Songs That Remind Me of You</h4>
+                            
+                            <div class="songs-list" id="songsList">
+                                <!-- Songs will be dynamically added here -->
+                            </div>
+                            
+                            <div class="player-controls">
+                                <button id="prevTrackBtn" class="player-btn player-btn-small" title="Previous Track">
+                                    <i class="fas fa-step-backward"></i>
+                                </button>
+                                
+                                <button id="playPauseBtn" class="player-btn" title="Play/Pause">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                
+                                <button id="nextTrackBtn" class="player-btn player-btn-small" title="Next Track">
+                                    <i class="fas fa-step-forward"></i>
+                                </button>
+                                
+                                <div class="progress-container">
+                                    <span id="currentTime" class="time-display">0:00</span>
+                                    <div class="progress-bar" id="progressBar">
+                                        <div class="progress" id="progress"></div>
+                                    </div>
+                                    <span id="duration" class="time-display">0:00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pictures Gallery Section -->
+                        <div class="pictures-section">
+                            <h4 class="gallery-title">Our Special Moments</h4>
+                            <p class="page-text" style="text-align: center; max-width: 900px; margin-bottom: 30px;">
+                                These are the moments I cherish with you, <span class="highlight">Maria</span>. 
+                                Each picture holds a special memory of our beautiful journey together.
+                            </p>
+                            
+                            <div class="gallery-grid" id="galleryGrid">
+                                <!-- Custom pictures will be dynamically added here -->
+                            </div>
+                            
+                            <div class="upload-hint">
+                                <i class="fas fa-info-circle"></i> 
+                                Place your custom pictures (picture1.jpg, picture2.jpg, picture3.jpg) 
+                                in the same folder as this HTML file
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <footer class="page-footer">
+                    <div class="footer-content">
+                        <button id="prevBtn4" class="nav-btn">
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        
+                        <div class="page-indicator">
+                            <span class="indicator-dot" data-page="1"></span>
+                            <span class="indicator-dot" data-page="2"></span>
+                            <span class="indicator-dot" data-page="3"></span>
+                            <span class="indicator-dot active" data-page="4"></span>
+                        </div>
+                        
+                        <div class="heart-counter">
+                            <i class="fas fa-heart" id="footerHeart4"></i>
+                            <span>Our Love in Sound & Vision</span>
+                        </div>
+                        
+                        <button id="nextBtn4" class="nav-btn" disabled>
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- External Audio Player -->
+    <audio id="externalAudioPlayer" preload="metadata">
+        <!-- Custom music will be loaded here -->
+    </audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ==================== CUSTOM AUDIO PLAYER ====================
+            const externalAudio = document.getElementById('externalAudioPlayer');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const prevTrackBtn = document.getElementById('prevTrackBtn');
+            const nextTrackBtn = document.getElementById('nextTrackBtn');
+            const progressBar = document.getElementById('progressBar');
+            const progress = document.getElementById('progress');
+            const currentTimeEl = document.getElementById('currentTime');
+            const durationEl = document.getElementById('duration');
+            const songsList = document.getElementById('songsList');
+            
+            // CUSTOM SONGS - Your requested song list
+            const customSongs = [
+                {
+                    id: 1,
+                    title: "I think they call this love",
+                    artist: "Elliot James Reay",
+                    duration: "3:45",
+                    url: "song1.mp3"  // Place song1.mp3 in same folder
+                },
+                {
+                    id: 2,
+                    title: "Perfect",
+                    artist: "Ed Sheeran",
+                    duration: "4:23",
+                    url: "song2.mp3"  // Place song2.mp3 in same folder
+                },
+                {
+                    id: 3,
+                    title: "A thousand years",
+                    artist: "Christina Perri",
+                    duration: "4:45",
+                    url: "song3.mp3"  // Place song3.mp3 in same folder
+                },
+                {
+                    id: 4,
+                    title: "her",
+                    artist: "JVKE",
+                    duration: "3:15",
+                    url: "song4.mp3"  // Place song4.mp3 in same folder
+                },
+                {
+                    id: 5,
+                    title: "blue",
+                    artist: "yung kai",
+                    duration: "3:30",
+                    url: "song5.mp3"  // Place song5.mp3 in same folder
+                }
+            ];
+            
+            // CUSTOM PICTURES - Replace with your picture1.jpg through picture3.jpg
+            const customPictures = [
+                {
+                    id: 1,
+                    url: "picture1.jpg",  // Place picture1.jpg in same folder
+                    caption: "Our First Connection"
+                },
+                {
+                    id: 2,
+                    url: "picture2.jpg",  // Place picture2.jpg in same folder
+                    caption: "Dreams of Togetherness"
+                },
+                {
+                    id: 3,
+                    url: "picture3.jpg",  // Place picture3.jpg in same folder
+                    caption: "Love Across the Distance"
+                }
+            ];
+            
+            // Backup images in case custom images don't load
+            const backupImages = [
+                {
+                    id: 1,
+                    url: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    caption: "Romantic Sunset"
+                },
+                {
+                    id: 2,
+                    url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    caption: "Distant Love"
+                },
+                {
+                    id: 3,
+                    url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    caption: "Eternal Connection"
+                }
+            ];
+            
+            let currentSongIndex = 0;
+            let isExternalPlaying = false;
+            let imagesToUse = [];
+            
+            // Test if custom images exist
+            function checkCustomImages() {
+                imagesToUse = [...customPictures];
+                
+                // Test each custom image
+                customPictures.forEach((img, index) => {
+                    const testImg = new Image();
+                    testImg.onerror = function() {
+                        console.log(`Custom image ${img.url} not found, using backup`);
+                        if (backupImages[index]) {
+                            imagesToUse[index] = backupImages[index];
+                        }
+                    };
+                    testImg.src = img.url;
+                });
+            }
+            
+            // Initialize songs list
+            function initializeSongsList() {
+                songsList.innerHTML = '';
+                customSongs.forEach((song, index) => {
+                    const songItem = document.createElement('div');
+                    songItem.className = `song-item ${index === currentSongIndex ? 'active' : ''}`;
+                    songItem.innerHTML = `
+                        <i class="fas fa-music song-icon"></i>
+                        <div class="song-info">
+                            <div class="song-title">${song.title}</div>
+                            <div class="song-artist">${song.artist}</div>
+                        </div>
+                        <div class="song-duration">${song.duration}</div>
+                    `;
+                    songItem.addEventListener('click', () => playSong(index));
+                    songsList.appendChild(songItem);
+                });
+            }
+            
+            // Initialize gallery with custom pictures
+            function initializeGallery() {
+                const galleryGrid = document.getElementById('galleryGrid');
+                galleryGrid.innerHTML = '';
+                
+                checkCustomImages();
+                
+                imagesToUse.forEach(image => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item';
+                    galleryItem.innerHTML = `
+                        <img src="${image.url}" alt="${image.caption}" class="gallery-img" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'">
+                        <div class="gallery-caption">${image.caption}</div>
+                    `;
+                    
+                    // Add click event to enlarge image
+                    galleryItem.addEventListener('click', () => {
+                        const modal = document.createElement('div');
+                        modal.style.cssText = `
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background: rgba(0, 0, 0, 0.9);
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            z-index: 2000;
+                            cursor: pointer;
+                        `;
+                        
+                        modal.innerHTML = `
+                            <img src="${image.url}" alt="${image.caption}" style="max-width: 90%; max-height: 90%; border-radius: 10px;">
+                            <div style="position: absolute; bottom: 20px; color: white; font-size: 1.2rem;">${image.caption}</div>
+                            <button style="position: absolute; top: 20px; right: 20px; background: #ff4d8d; border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer;">×</button>
+                        `;
+                        
+                        document.body.appendChild(modal);
+                        
+                        // Close modal on click
+                        modal.addEventListener('click', (e) => {
+                            if (e.target.tagName === 'BUTTON' || e.target === modal) {
+                                document.body.removeChild(modal);
+                            }
+                        });
+                    });
+                    
+                    galleryGrid.appendChild(galleryItem);
+                });
+            }
+            
+            // Format time in MM:SS
+            function formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            }
+            
+            // Play a specific song
+            function playSong(index) {
+                if (index < 0) index = customSongs.length - 1;
+                if (index >= customSongs.length) index = 0;
+                
+                currentSongIndex = index;
+                const song = customSongs[currentSongIndex];
+                
+                // Update UI
+                document.querySelectorAll('.song-item').forEach((item, i) => {
+                    item.classList.toggle('active', i === currentSongIndex);
+                });
+                
+                // Try to load and play the song
+                externalAudio.src = song.url;
+                externalAudio.load();
+                
+                // Attempt to play with error handling
+                const playPromise = externalAudio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        isExternalPlaying = true;
+                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                        playPauseBtn.title = "Pause";
+                        console.log("Playing:", song.title);
+                    }).catch(error => {
+                        console.log("Error playing audio:", error);
+                        // Try to auto-play when user interacts
+                        document.addEventListener('click', function retryPlay() {
+                            externalAudio.play().then(() => {
+                                isExternalPlaying = true;
+                                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                                playPauseBtn.title = "Pause";
+                            });
+                            document.removeEventListener('click', retryPlay);
+                        }, { once: true });
+                    });
+                }
+            }
+            
+            // Update progress bar
+            function updateProgress() {
+                if (!isNaN(externalAudio.duration)) {
+                    const progressPercent = (externalAudio.currentTime / externalAudio.duration) * 100;
+                    progress.style.width = `${progressPercent}%`;
+                    currentTimeEl.textContent = formatTime(externalAudio.currentTime);
+                    durationEl.textContent = formatTime(externalAudio.duration);
+                }
+            }
+            
+            // Set progress on click
+            function setProgress(e) {
+                const width = this.clientWidth;
+                const clickX = e.offsetX;
+                const duration = externalAudio.duration;
+                
+                externalAudio.currentTime = (clickX / width) * duration;
+            }
+            
+            // Event listeners for external player
+            playPauseBtn.addEventListener('click', () => {
+                if (isExternalPlaying) {
+                    externalAudio.pause();
+                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                    playPauseBtn.title = "Play";
+                } else {
+                    externalAudio.play().then(() => {
+                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                        playPauseBtn.title = "Pause";
+                    }).catch(e => {
+                        console.log("Play error:", e);
+                    });
+                }
+                isExternalPlaying = !isExternalPlaying;
+            });
+            
+            prevTrackBtn.addEventListener('click', () => playSong(currentSongIndex - 1));
+            nextTrackBtn.addEventListener('click', () => playSong(currentSongIndex + 1));
+            
+            externalAudio.addEventListener('timeupdate', updateProgress);
+            externalAudio.addEventListener('ended', () => playSong(currentSongIndex + 1));
+            externalAudio.addEventListener('loadedmetadata', () => {
+                durationEl.textContent = formatTime(externalAudio.duration);
+            });
+            
+            progressBar.addEventListener('click', setProgress);
+            
+            // ==================== HEARTBEAT SOUND SYSTEM ====================
+            let audioContext;
+            let isHeartbeatPlaying = false;
+            let heartbeatVolume = 0.5;
+            let heartbeatInterval;
+            
+            const heartbeatBtn = document.getElementById('heartbeatBtn');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const audioStatus = document.getElementById('audioStatus');
+            
+            // Initialize audio context
+            function initHeartbeatAudio() {
+                if (!audioContext) {
+                    try {
+                        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                        audioStatus.textContent = "Heartbeat ready";
+                        return true;
+                    } catch (e) {
+                        console.error("Audio context not supported:", e);
+                        audioStatus.textContent = "Heartbeat not available";
+                        return false;
+                    }
+                }
+                return true;
+            }
+            
+            // Create a heartbeat sound
+            function playHeartbeatSound() {
+                if (!audioContext || !isHeartbeatPlaying) return;
+                
+                try {
+                    // Create two quick pulses for a heartbeat
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    // Configure the sound
+                    oscillator.type = 'sine';
+                    
+                    // First pulse (louder)
+                    oscillator.frequency.setValueAtTime(150, audioContext.currentTime);
+                    gainNode.gain.setValueAtTime(heartbeatVolume * 0.5, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.05);
+                    
+                    // Second pulse (softer, after a short delay)
+                    setTimeout(() => {
+                        if (audioContext.state === 'running' && isHeartbeatPlaying) {
+                            oscillator.frequency.setValueAtTime(120, audioContext.currentTime);
+                            gainNode.gain.setValueAtTime(heartbeatVolume * 0.3, audioContext.currentTime);
+                            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.08);
+                        }
+                    }, 100);
+                    
+                    // Play the sound
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + 0.2);
+                } catch (e) {
+                    console.log("Could not play heartbeat sound:", e);
+                }
+            }
+            
+            // Start/stop heartbeat
+            function toggleHeartbeat() {
+                if (!initHeartbeatAudio()) return;
+                
+                if (isHeartbeatPlaying) {
+                    // Stop heartbeat
+                    clearInterval(heartbeatInterval);
+                    isHeartbeatPlaying = false;
+                    heartbeatBtn.innerHTML = '<i class="fas fa-heartbeat"></i>';
+                    heartbeatBtn.title = "Start Heartbeat";
+                    audioStatus.textContent = "Heartbeat paused";
+                    console.log("Heartbeat stopped");
+                } else {
+                    // Start heartbeat
+                    isHeartbeatPlaying = true;
+                    heartbeatBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    heartbeatBtn.title = "Stop Heartbeat";
+                    audioStatus.textContent = "Heartbeat playing";
+                    
+                    // Play first heartbeat immediately
+                    playHeartbeatSound();
+                    
+                    // Then play at regular intervals (every 1.5 seconds for realistic heartbeat)
+                    heartbeatInterval = setInterval(() => {
+                        if (isHeartbeatPlaying) {
+                            playHeartbeatSound();
+                        }
+                    }, 1500);
+                    
+                    console.log("Heartbeat started");
+                }
+            }
+            
+            // Volume control for heartbeat
+            volumeSlider.addEventListener('input', function() {
+                heartbeatVolume = parseFloat(this.value);
+                audioStatus.textContent = `Heartbeat volume: ${Math.round(heartbeatVolume * 100)}%`;
+            });
+            
+            // Heartbeat button event
+            heartbeatBtn.addEventListener('click', toggleHeartbeat);
+            
+            // Initialize heartbeat on user interaction
+            document.addEventListener('click', function initHeartbeatOnce() {
+                if (!isHeartbeatPlaying && initHeartbeatAudio()) {
+                    setTimeout(() => toggleHeartbeat(), 1000);
+                }
+                document.removeEventListener('click', initHeartbeatOnce);
+            }, { once: true });
+            
+            // ==================== PAGE NAVIGATION ====================
+            const pages = document.querySelectorAll('.page');
+            let currentPage = 1;
+            const totalPages = pages.length;
+            
+            // Create stars for the background
+            const starsContainer = document.getElementById('stars');
+            function createStars() {
+                for (let i = 0; i < 150; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    const size = Math.random() * 3 + 1;
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 100}%`;
+                    star.style.animationDelay = `${Math.random() * 3}s`;
+                    starsContainer.appendChild(star);
+                }
+            }
+            
+            createStars();
+            
+            // Function to update page display
+            function updatePage(newPage) {
+                currentPage = newPage;
+                
+                pages.forEach((page, index) => {
+                    if (index + 1 === currentPage) {
+                        page.classList.remove('previous');
+                        page.classList.add('active');
+                    } else {
+                        page.classList.remove('active');
+                        if (index + 1 < currentPage) {
+                            page.classList.add('previous');
+                        } else {
+                            page.classList.remove('previous');
+                        }
+                    }
+                });
+                
+                updateAllNavigationButtons();
+                
+                // If we're on page 4 (music gallery), initialize the content
+                if (currentPage === 4) {
+                    initializeSongsList();
+                    initializeGallery();
+                    
+                    // Auto-play first song if not already playing
+                    if (!isExternalPlaying && customSongs.length > 0) {
+                        setTimeout(() => playSong(0), 500);
+                    }
+                }
+            }
+            
+            // Update all navigation buttons
+            function updateAllNavigationButtons() {
+                const allPrevButtons = document.querySelectorAll('[id^="prevBtn"]');
+                allPrevButtons.forEach(btn => {
+                    btn.disabled = currentPage === 1;
+                });
+                
+                const allNextButtons = document.querySelectorAll('[id^="nextBtn"]');
+                allNextButtons.forEach(btn => {
+                    btn.disabled = currentPage === totalPages;
+                });
+                
+                const allDots = document.querySelectorAll('.indicator-dot');
+                allDots.forEach(dot => {
+                    const pageNumber = parseInt(dot.getAttribute('data-page'));
+                    dot.classList.toggle('active', pageNumber === currentPage);
+                });
+            }
+            
+            // Set up navigation event listeners
+            function setupNavigation() {
+                // Page 1 buttons
+                document.getElementById('prevBtn').addEventListener('click', () => {
+                    if (currentPage > 1) updatePage(currentPage - 1);
+                });
+                document.getElementById('nextBtn').addEventListener('click', () => {
+                    if (currentPage < totalPages) updatePage(currentPage + 1);
+                });
+                
+                // Page 2 buttons
+                document.getElementById('prevBtn2').addEventListener('click', () => {
+                    if (currentPage > 1) updatePage(currentPage - 1);
+                });
+                document.getElementById('nextBtn2').addEventListener('click', () => {
+                    if (currentPage < totalPages) updatePage(currentPage + 1);
+                });
+                
+                // Page 3 buttons
+                document.getElementById('prevBtn3').addEventListener('click', () => {
+                    if (currentPage > 1) updatePage(currentPage - 1);
+                });
+                document.getElementById('nextBtn3').addEventListener('click', () => {
+                    if (currentPage < totalPages) updatePage(currentPage + 1);
+                });
+                
+                // Page 4 buttons
+                document.getElementById('prevBtn4').addEventListener('click', () => {
+                    if (currentPage > 1) updatePage(currentPage - 1);
+                });
+                document.getElementById('nextBtn4').addEventListener('click', () => {
+                    if (currentPage < totalPages) updatePage(currentPage + 1);
+                });
+                
+                // Indicator dots
+                const allDots = document.querySelectorAll('.indicator-dot');
+                allDots.forEach(dot => {
+                    dot.addEventListener('click', function() {
+                        const pageNumber = parseInt(this.getAttribute('data-page'));
+                        updatePage(pageNumber);
+                    });
+                });
+            }
+            
+            // Add sound effects to heart icons
+            function setupHeartSoundEffects() {
+                const heartIcons = document.querySelectorAll('.heart-icon, .distance-heart, .heart-counter i');
+                heartIcons.forEach(icon => {
+                    icon.addEventListener('click', function() {
+                        if (audioContext && isHeartbeatPlaying) {
+                            // Play an extra heartbeat when clicking hearts
+                            setTimeout(() => playHeartbeatSound(), 100);
+                        }
+                        // Visual feedback
+                        this.style.transform = 'scale(1.3)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 300);
+                    });
+                });
+                
+                // Future memory cards also trigger heartbeat
+                const futureCards = document.querySelectorAll('.future-card');
+                futureCards.forEach(card => {
+                    card.addEventListener('click', function() {
+                        if (audioContext && isHeartbeatPlaying) {
+                            setTimeout(() => playHeartbeatSound(), 100);
+                        }
+                    });
+                });
+            }
+            
+            // Initialize everything
+            setupNavigation();
+            setupHeartSoundEffects();
+            updateAllNavigationButtons();
+            
+            // Initialize page 4 content when page loads
+            if (currentPage === 4) {
+                setTimeout(() => {
+                    initializeSongsList();
+                    initializeGallery();
+                }, 500);
+            }
+            
+            // Add romantic console message
+            setTimeout(() => {
+                console.log("%cFor Maria: Every beat of my heart sings your name. ❤️", 
+                    "color: #ff8cc6; font-size: 16px; font-weight: bold; background: rgba(20, 10, 40, 0.9); padding: 10px; border-radius: 5px;");
+                console.log("%cSong files needed: song1.mp3 through song5.mp3", 
+                    "color: #a78bfa; font-size: 14px; background: rgba(20, 10, 40, 0.9); padding: 8px; border-radius: 5px;");
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
